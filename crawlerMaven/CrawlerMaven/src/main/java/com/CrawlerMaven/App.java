@@ -18,7 +18,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class App 
 {
-    public static void main( String[] args )
+	private App() {}
+    public static void main(List<String> urlList)
     {
     	/*初始化 WebDriver開啟Firefox瀏覽器*/
     	WebDriver driver = new FirefoxDriver();
@@ -34,50 +35,55 @@ public class App
 	    WebElement loginElement =driver.findElement(By.id("loginbutton"));
 	    loginElement.click();
 	    
-        //模拟火狐浏览器
-        //driver.get("https://www.facebook.com/Claire.fans/");
-
-        int count = 0;
-    	try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-        try {
-        	int top = 0;
-        	int bottom = 400;
-        //滚动
-        while(true){
-        	Thread.sleep(500);
-        	String sroll = "document.documentElement.scrollTop+=100";
-        	JavascriptExecutor je = (JavascriptExecutor) driver;
-        	je.executeScript(sroll);
-        	List<WebElement> extendElement =driver.findElements(By.className("see_more_link"));
-        	top +=100;
-        	bottom +=100;
-        	for(WebElement we : extendElement){
-        		int weBottom = we.getLocation().y;
-        		if(weBottom <bottom && weBottom > top)we.click();
-        	}
-        	Thread.sleep(500);
-        	if(count == 60)break;
-        	count++;
-        }
-        }catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-        List<WebElement> elements = driver.findElements(By.className("userContentWrapper"));
-        int j = 0;
-        for (int i = 0; i < elements.size(); i++) {
-            WebElement user = elements.get(i).findElement(By.className("fwb"));
-            WebElement userContent = elements.get(i).findElement(By.className("userContent"));
-            System.out.println((j++) + " :" + user.getText());
-            System.out.println("內容 :" + userContent.getText());
-            System.out.println("\n");
-        }
+	    for(String url : urlList){
+	        //模拟火狐浏览器
+	        driver.get(url);
+	
+	        int count = 0;
+	    	try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+	        try {
+//	        	int top = 0;
+//	        	int bottom = 400;
+	        //滚动
+	        while(true){
+	        	Thread.sleep(50);
+	        	String sroll = "document.documentElement.scrollTop+=50";
+	        	JavascriptExecutor je = (JavascriptExecutor) driver;
+	        	je.executeScript(sroll);
+//	        	List<WebElement> extendElement =driver.findElements(By.className("see_more_link"));
+//	        	top +=50;
+//	        	bottom +=50;
+//	        	for(WebElement we : extendElement){
+//	        		int weBottom = we.getLocation().y;
+//	        		System.out.println("top:"+top);
+//	        		System.out.println("bottom:"+bottom);
+//	        		System.out.println("we:"+weBottom);
+//	        		if(weBottom <bottom && weBottom > top)we.click();
+//	        	}
+	        	Thread.sleep(50);
+	        	if(count == 500)break;
+	        	count++;
+	        }
+	        }catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	
+	        List<WebElement> elements = driver.findElements(By.className("userContentWrapper"));
+	        int j = 0;
+	        for (int i = 0; i < elements.size(); i++) {
+	            WebElement user = elements.get(i).findElement(By.className("fwb"));
+	            WebElement userContent = elements.get(i).findElement(By.className("userContent"));
+	            System.out.println((j++) + " :" + user.getText());
+	            System.out.println("內容 :" + userContent.getText());
+	            System.out.println("\n");
+	        }
+	    }
         driver.close(); 
     }
 }
