@@ -1,8 +1,9 @@
 package com.CrawlerMaven;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
-import org.jsoup.nodes.Element;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
@@ -18,8 +19,10 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class App 
 {
+	static String fbOwnerName;
+	
 	private App() {}
-    public static void main(List<String> urlList)
+    public static void main(List<String> urlList) throws Exception
     {
     	/*初始化 WebDriver開啟Firefox瀏覽器*/
     	WebDriver driver = new FirefoxDriver();
@@ -38,10 +41,16 @@ public class App
 	    for(String url : urlList){
 	        //模拟火狐浏览器
 	        driver.get(url);
-	
+	        
 	        int count = 0;
 	    	try {
 				Thread.sleep(5000);
+				WebElement fbName = driver.findElement(By.id("fb-timeline-cover-name"));
+				if(fbName!=null){
+					System.out.println("網址擁有者姓名:"+fbName.getText());
+			        fbOwnerName = fbName.getText();
+				}		        
+				
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -66,7 +75,7 @@ public class App
 //	        		if(weBottom <bottom && weBottom > top)we.click();
 //	        	}
 	        	Thread.sleep(50);
-	        	if(count == 500)break;
+	        	if(count == 100)break;
 	        	count++;
 	        }
 	        }catch (InterruptedException e) {
@@ -74,16 +83,37 @@ public class App
 				e.printStackTrace();
 			}
 	
-	        List<WebElement> elements = driver.findElements(By.className("userContentWrapper"));
-	        int j = 0;
-	        for (int i = 0; i < elements.size(); i++) {
-	            WebElement user = elements.get(i).findElement(By.className("fwb"));
-	            WebElement userContent = elements.get(i).findElement(By.className("userContent"));
-	            System.out.println((j++) + " :" + user.getText());
-	            System.out.println("內容 :" + userContent.getText());
-	            System.out.println("\n");
-	        }
+	        writeFile(driver,url);
+	        IndexFiles indexfiles = new IndexFiles();
+	        //製作index document
+	        indexfiles.main(fbOwnerName);
 	    }
         driver.close(); 
+    }
+    
+    private static void writeFile(WebDriver driver,String url) throws IOException{
+    	FileWriter fileWriter = new FileWriter(fbOwnerName+"CrawlerContent.txt");
+    	
+    	List<WebElement> elements = driver.findElements(By.className("userContentWrapper"));
+        if(elements != null){
+        	fileWriter.write("網址擁有者名:" + fbOwnerName+"\r\n");
+        	fileWriter.write("網址:" + url+"\r\n");
+        	for (int i = 0; i < elements.size(); i++) {
+                WebElement user = elements.get(i).findElement(By.className("fwb"));
+                WebElement userContent = elements.get(i).findElement(By.className("userContent"));
+                //只寫入FB擁有者發布的貼文
+                if(user != null){
+                	if(user.getText().trim().equals(fbOwnerName.trim())){
+                        if(userContent != null){
+                        	System.out.println(userContent.getText());
+                            fileWriter.write(userContent.getText()+"\r\n");
+                        }
+                        System.out.println("\n");
+                    }
+                }
+            }
+        }
+        fileWriter.flush();
+        fileWriter.close();
     }
 }

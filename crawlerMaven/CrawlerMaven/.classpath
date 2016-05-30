@@ -12,7 +12,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_60">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
@@ -22,9 +22,13 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/北科用/大四/資料檢索/crawler/jsoup-1.9.2.jar"/>
-	<classpathentry kind="lib" path="D:/北科用/大四/資料檢索/crawler/selenium-java-2.53.0.jar"/>
-	<classpathentry kind="lib" path="D:/北科用/大四/資料檢索/crawler/selenium-java-2.53.0-srcs.jar"/>
-	<classpathentry kind="lib" path="D:/北科用/大四/資料檢索/crawler/selenium-server-standalone-2.53.0.jar"/>
+	<classpathentry kind="lib" path="//psf/Home/Documents/IR/crawlerMaven/CrawlerMaven/lucene-analyzers-common-5.5.0.jar"/>
+	<classpathentry kind="lib" path="//psf/Home/Documents/IR/crawlerMaven/CrawlerMaven/lucene-core-5.5.0.jar"/>
+	<classpathentry kind="lib" path="//psf/Home/Documents/IR/crawlerMaven/CrawlerMaven/lucene-demo-5.5.0.jar"/>
+	<classpathentry kind="lib" path="//psf/Home/Documents/IR/crawlerMaven/CrawlerMaven/lucene-queryparser-5.5.0.jar"/>
+	<classpathentry kind="lib" path="//psf/Home/Documents/IR/crawlerMaven/CrawlerMaven/mmseg4j-analysis-1.9.2.jar"/>
+	<classpathentry kind="lib" path="//psf/Home/Documents/IR/crawlerMaven/CrawlerMaven/mmseg4j-core-1.9.2.jar"/>
+	<classpathentry kind="lib" path="//psf/Home/Documents/IR/crawlerMaven/selenium-java-2.53.0.jar"/>
+	<classpathentry kind="lib" path="//psf/Home/Documents/IR/crawlerMaven/selenium-java-2.53.0-srcs.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
